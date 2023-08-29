@@ -2,7 +2,7 @@
 # It is heavily influenced by <https://en.wikipedia.org/wiki/Langton%27s_ant>.
 # It is a simulation only, intended to create digital art; it has no controls.
 
-import thumby 
+import thumby
 import random
 from framebuf import FrameBuffer, MONO_HMSB, MONO_VLSB
 
