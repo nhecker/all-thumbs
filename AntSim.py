@@ -1,3 +1,7 @@
+# This CircuitPython is intened for TinyCircuits's Thumby, <https://thumby.us/>.
+# It is heavily influenced by <https://en.wikipedia.org/wiki/Langton%27s_ant>.
+# It is a simulation only, intended to create digital art; it has no controls.
+
 import thumby 
 import random
 from framebuf import FrameBuffer, MONO_HMSB, MONO_VLSB
@@ -13,6 +17,9 @@ antx = thumby.display.width//2 # init ant position (center)
 anty = thumby.display.height//2
 fbuffer = FrameBuffer(thumby.display.display.buffer, 72, 40, MONO_VLSB)
 
+# Single-pixel cells are dumb and we should just use a buffer directly so
+# that we don't have to call BuildBuffer() every frame. This is probably
+# the first thing to optimize for huge efficiency gainz.
 def InitCells(): # initializes the cells array with all 0s
     global cells
     for row in range(thumby.display.height):
@@ -34,9 +41,6 @@ def BuildBuffer(): # convert cells array to a buffer for display
     fbuffer.blit(FrameBuffer(buf, 72, 40, MONO_HMSB), 0, 0, 72,40) # draw board
     thumby.display.update() # flush the screenbuffer
 
-# Single-pixel cells are dumb and we should just use a buffer directly so
-# that we don't have to call BuildBuffer() every frame. This is probably
-# the first thing to optimize for huge efficiency gainz.
 def Simulate(): # simulates the ant in a grid of cells
     global antx
     global anty
